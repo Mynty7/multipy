@@ -42,5 +42,9 @@ def level1():
             break
 
 Menu()
+Menu()
+Menu()
+Menu()
+Menu()
 
 

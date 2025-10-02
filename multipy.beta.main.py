@@ -1,38 +1,59 @@
 import random
 import tkinter as tk
 
-
-def Menu():
-    print("/ *************************************** \ \n| *************************************** |\n| ******* Welcome to game thingy! ******* |\n| *******    Select your Level!   ******* |\n| *************************************** |") 
+def menu():
+    print("/ ***************************************  \ \n| *************************************** |\n| ******* Welcome to game thingy! ******* |\n| *******    Select your Level!   ******* |\n| *************************************** |")
     print("| Levels | [1]Easy | [2]Medium | [3]Hard  |")
-    level_selector = int(input("Select Your Level! :"))
+    level_selector = int(input("|               Select Your Level! :"))
 
     match level_selector:
 
         case 1:
-            print("Preparing level 1....")
+            print("|        Preparing level 1....        |")
             level1()
 
 def level1():
+    #Declare variables
     low = 0
     high = 12
     lives = 5
     num_que = 0
+    
+    while lives > 0 and num_que < 10: 
 
-    #engine
-    while lives > 0 and num_que < 10:
-        num1 = 4
+        #random number generator
+        num1 = random.randint(low, high)
         num2 = random.randint(low, high)
-        que = num1 * num2
 
-        print(f"{num1} x {num2} = ?")
+        #question generator + display
+        que = num1 * num2
+        print(f"|             {num1} x {num2} = ?              |")
+        print("|         Available Answers:          |")
+
+        #Creating MCQ sets
+        choices = set()
+        while len(choices) < 3:
+            wrong_ans = random.randint(low*high, high*high)
+            if wrong_ans != que:
+                choices.add(wrong_ans)
+
+        #Adding wrong_ans with correct ones to complete MCQ set
+        options = list(choices) + [que]
+        random.shuffle(options)
+
+        #printing all MCQ options, enumerate converts the answers into a label from 1-4, so if 1 = 24, when inputted 1 it actually means 24
+        for x, opt in enumerate (options, 1):
+            print(f"[{x}] {opt}")
+
+        #user's answer from [1-4] answers
         answer = int(input("Answer = "))
         
-        if answer == que:
+        #answer checker
+        if options[answer - 1] == que:
             num_que += 1
             print(f"| correct! | Lives: {lives} | Questions Left: {num_que}/10 |")
                 
-        elif answer != que:
+        elif options[answer - 1] != que:
             lives -= 1
             num_que += 1
             print(f"| incorrect! | lives: {lives} | Questions Left: {num_que}/10 |")
@@ -41,15 +62,8 @@ def level1():
             print("you have died...")
             break
 
-Menu()
-Menu()
-Menu()
-Menu()
-Menu()
+menu()
 
-Yes()
-Menu()
-Menu()
-Menu()
+
 
 
